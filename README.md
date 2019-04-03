@@ -4,6 +4,6 @@ Repositório para gerenciamento do projeto proposto na disciplina Engenharia de 
 
 **Integrantes:**
 * Hilderlan da Silva Almeida
-* Matheus Tito
+* Mateus Tito
 * Pedro Vítor
 * Lucas Vinícius Gomes de Brito
