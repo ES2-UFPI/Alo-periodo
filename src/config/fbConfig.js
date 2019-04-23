@@ -2,14 +2,14 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-// Initialize Firebase
+  // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCu6yHfSPtDhKSIhsD5JV7T8oXk3mD8s3Q",
-  authDomain: "alo-periodo-849f3.firebaseapp.com",
-  databaseURL: "https://alo-periodo-849f3.firebaseio.com",
-  projectId: "alo-periodo-849f3",
-  storageBucket: "alo-periodo-849f3.appspot.com",
-  messagingSenderId: "1096022847812"
+  apiKey: "AIzaSyDBMVn4qJtzuqeqOULExaBbvroFHqpAoyc",
+  authDomain: "alo-periodo-dff25.firebaseapp.com",
+  databaseURL: "https://alo-periodo-dff25.firebaseio.com",
+  projectId: "alo-periodo-dff25",
+  storageBucket: "alo-periodo-dff25.appspot.com",
+  messagingSenderId: "975755220540"
 };
 
 firebase.initializeApp(config);
