@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios, { post } from 'axios';
 
+import { connect } from 'react-redux'
+import { createProject } from '../../store/actions/projectActions'
+
 class CreateProject extends Component {
   state = {
     title: '',
@@ -13,7 +16,8 @@ class CreateProject extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    // console.log(this.state);
+    this.props.createProject(this.state)
   }
 
 // New
@@ -63,10 +67,12 @@ fileUpload(file){
             <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
             <label htmlFor="content">Project Content</label>
           </div>
+
           <div className="file-field">
             <input type="file" onChange={this.onChange} />
             <button type="submit">Upload</button>
           </div>
+          
           <div className="input-field">
             <button className="btn gray lighten-1">Create</button>
           </div>
@@ -76,4 +82,10 @@ fileUpload(file){
   }
 }
 
-export default CreateProject
+const mapDispatchToProps = dispatch => {
+  return {
+    createProject: (project) => dispatch(createProject(project))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CreateProject)
