@@ -1,5 +1,5 @@
 {
-  "name": "marioplan",
+  "name": "alo-periodo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,7 @@
     "react-redux-firebase": "^2.2.6",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.5",
-    "redux": "^4.0.0",
+    "redux": "^4.0.1",
     "redux-firestore": "^0.7.3",
     "redux-thunk": "^2.3.0"
   },
