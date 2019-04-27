@@ -4,13 +4,19 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 
-const Navbar = () => {
+const Navbar = (props) => {
+  
+  const { auth } = props;
+  // console.log(auth);
+  const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
+  // se o user logar (autenticado pelo uid) tem acesso ao New File (SignedInLinks)
+  // se nao tiver logado, soh aparece SignedOutLinks
+  
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">
         <Link to='/' className="brand-logo">Alô, Período!</Link>
-        <SignedInLinks />
-        <SignedOutLinks />
+        { links }
       </div>
     </nav>
   )
@@ -18,7 +24,7 @@ const Navbar = () => {
 
 const mapStateToProps = (state) => {
   return {
-
+    auth: state.firebase.auth
   }
 }
 

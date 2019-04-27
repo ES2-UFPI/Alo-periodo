@@ -15,7 +15,7 @@ class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.signIn(this.state); // manda o email e pass do state
+    this.props.signIn(this.state); // manda o email e password do state
   }
 
   render() {
@@ -35,7 +35,7 @@ class SignIn extends Component {
           <div className="input-field">
             <button className="btn gray lighten-1 z-depth-0">Login</button>
             
-            <div className="center red-text">
+            <div className="center green-text">
               { authError ? <p>{authError}</p> : null }
             </div>
 
