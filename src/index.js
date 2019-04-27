@@ -7,11 +7,12 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './store/reducers/rootReducer'
 import { Provider } from 'react-redux'
 
-// news imports...
+// new imports...
 import thunk from 'redux-thunk'
 import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import fbConfig from './config/fbConfig'
+
 
 const store = createStore(rootReducer,
     compose(
@@ -20,6 +21,8 @@ const store = createStore(rootReducer,
       reduxFirestore(fbConfig)
     )
   );
+
   
   ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
   registerServiceWorker();
+
