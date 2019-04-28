@@ -14,7 +14,7 @@ class SignUp extends Component {
     })
   }
   handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Modificar aqui para mandar pro FB, pois ainda está estático
     console.log(this.state);
   }
 
