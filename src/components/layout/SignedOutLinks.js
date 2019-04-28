@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const SignedOutLinks = () => {
+const SignedOutLinks = () => {  // Links mostrados ao usuario deslogado
   return (
     <div>
       <ul className="right">
