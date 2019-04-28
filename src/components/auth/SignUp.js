@@ -7,6 +7,7 @@ class SignUp extends Component {
     firstName: '',
     lastName: '',
   }
+  
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
@@ -16,6 +17,7 @@ class SignUp extends Component {
     e.preventDefault();
     console.log(this.state);
   }
+
   render() {
     return (
       <div className="container">
