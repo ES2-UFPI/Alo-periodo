@@ -58,7 +58,7 @@ fileUpload(file){
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Create a New Project</h5>
+          <h5 className="blue-grey-text text-darken-3">Create a New Project</h5>
           <div className="input-field">
             <input type="text" id='title' onChange={this.handleChange} />
             <label htmlFor="title">Project Title</label>
@@ -74,7 +74,7 @@ fileUpload(file){
           </div>
           
           <div className="input-field">
-            <button className="btn gray lighten-1">Create</button>
+            <button className="btn gray darken-3">Create</button>
           </div>
         </form>
       </div>

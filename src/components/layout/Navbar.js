@@ -13,7 +13,7 @@ const Navbar = (props) => {
   // se nao tiver logado, soh aparece SignedOutLinks
   
   return (
-    <nav className="nav-wrapper grey darken-3">
+    <nav className="nav-wrapper blue-grey darken-4">
       <div className="container">
         <Link to='/' className="brand-logo">Alô, Período!</Link>
         { links }
