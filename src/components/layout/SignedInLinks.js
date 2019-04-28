@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps), // Antes tinha 2 linhas com connect
     firestoreConnect([
       { collection: 'projects' }
     ])
