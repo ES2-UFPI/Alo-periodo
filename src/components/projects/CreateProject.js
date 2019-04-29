@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios, { post } from 'axios';
-
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
+import { Redirect } from 'react-router-dom'
 
 class CreateProject extends Component {
   state = {
@@ -55,6 +55,11 @@ fileUpload(file){
 // End New
 
   render() {
+    const { auth } = this.props;
+
+    if (!auth.uid) return <Redirect to='/signin' />
+    // não permite acessar a página de criação de projeto se não estiver Logado
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -82,10 +87,16 @@ fileUpload(file){
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateProject)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject)
