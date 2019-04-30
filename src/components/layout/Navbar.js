@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 
 const Navbar = (props) => {
   
-  const { auth } = props;
+  const { auth, profile } = props;
   // console.log(auth);
-  const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
+  const links = auth.uid ? <SignedInLinks profile={ profile } /> : <SignedOutLinks />;
   // se o user logar (autenticado pelo uid) tem acesso ao New File (SignedInLinks)
   // se nao tiver logado, soh aparece SignedOutLinks
   
@@ -24,7 +24,8 @@ const Navbar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
   }
 }
 
