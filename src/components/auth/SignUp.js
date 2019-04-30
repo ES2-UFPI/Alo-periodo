@@ -74,4 +74,4 @@ const mapDispatchToProps = (dispatch) => { // disparar a criação do novo Unive
   }
 }
 
-export default connect(mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
