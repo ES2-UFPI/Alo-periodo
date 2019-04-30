@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { signUp } from '../../store/actions/authActions'
 
 class SignUp extends Component {
   state = {
@@ -14,11 +17,15 @@ class SignUp extends Component {
     })
   }
   handleSubmit = (e) => {
-    e.preventDefault(); // Modificar aqui para mandar pro FB, pois ainda está estático
-    console.log(this.state);
+    e.preventDefault();
+    this.props.signUp(this.state) // envio dos dados do Universitário (state)
   }
 
   render() {
+    const { auth, authError } = this.props;
+    if (auth.uid) return <Redirect to='/' />
+    // se logado => não permite acessar a página de /signup => manda pra home /
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -41,6 +48,11 @@ class SignUp extends Component {
           </div>
           <div className="input-field">
             <button className="btn gray lighten-1 z-depth-3">Sign Up</button>
+            
+            <div className="center green-text">
+              { authError ? <p>{authError}</p> : null }
+            </div>
+
           </div>
         </form>
       </div>
@@ -48,4 +60,17 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => { // disparar a criação do novo Universitário
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser)) // função signUp da authActions.js
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
