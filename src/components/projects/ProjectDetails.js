@@ -22,7 +22,6 @@ const ProjectDetails = (props) => {
       </div>
     </div>
     )
-  
   } else {
     return (
       <div className="container center white-text">
