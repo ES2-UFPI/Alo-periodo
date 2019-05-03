@@ -1,6 +1,12 @@
+// Action para salvar no Firestore o projeto que foi criado
+// Nele também deve salvar o Universitário que o criou
+
 export const createProject = (project) => {
-    return (dispatch, getState, {getFirestore}) => {
+    return (dispatch, getState, { getFirebase, getFirestore}) => {
+      
       const firestore = getFirestore();
+      // definir ... .getState()...
+      
       firestore.collection('projects').add({
 
         ...project,
@@ -17,5 +23,6 @@ export const createProject = (project) => {
         
         dispatch({ type: 'CREATE_PROJECT_ERROR' }, err);
       });
+
     }
   };
