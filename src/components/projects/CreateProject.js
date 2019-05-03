@@ -18,6 +18,9 @@ class CreateProject extends Component {
     e.preventDefault();
     // console.log(this.state);
     this.props.createProject(this.state)
+    
+    // ao criar o Projeto, direciona o Usuário para a página Home
+    this.props.history.push('/');
   }
 
 // New
