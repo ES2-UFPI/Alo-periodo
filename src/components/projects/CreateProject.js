@@ -67,12 +67,12 @@ fileUpload(file){
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="blue-grey-text text-darken-3">Create a New Project</h5>
-          <div className="input-field">
-            <input type="text" id='title' onChange={this.handleChange} />
+          <div className="input-field" >
+            <input type="text" id='title' onChange={this.handleChange} required/>
             <label htmlFor="title">Project Title</label>
           </div>
-          <div className="input-field">
-            <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
+          <div className="input-field" >
+            <textarea id="content" className="materialize-textarea" onChange={this.handleChange} required></textarea>
             <label htmlFor="content">Project Content</label>
           </div>
 
