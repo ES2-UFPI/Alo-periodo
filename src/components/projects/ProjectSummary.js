@@ -14,5 +14,3 @@ const ProjectSummary = ({ project }) => {
 }
 
 export default ProjectSummary
-
-// Pegar a parte implementada em Project Details para poder pegar o autor certo
