@@ -5,6 +5,7 @@ import { signOut } from '../../store/actions/authActions'
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { white } from 'material-ui/styles/colors';
 
 class SignedInLinks extends React.Component {
   state = {
@@ -28,13 +29,16 @@ class SignedInLinks extends React.Component {
         <ul className="right">
           <li><NavLink to='/create'>New File</NavLink></li>
           <li>
-            <div className="btn btn-floating green darken-2">
+            <div className="btn btn-floating green darken-3">{ props.profile.initials }</div>
+          </li>
+          <li>
+          <div>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleClick}
               >
-              { props.profile.initials }
+              <i class="material-icons" style={{ fontSize: 22, color: white }}>settings</i>
               </Button>
               <Menu
                 id="simple-menu"
@@ -44,7 +48,7 @@ class SignedInLinks extends React.Component {
               >
                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleClose}>Change Password</MenuItem>
-                <MenuItem onClick={props.signOut}>Logout</MenuItem>
+                <MenuItem onClick={ props.signOut }>Logout</MenuItem>
               </Menu>
             </div>
           </li>
