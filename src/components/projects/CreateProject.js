@@ -42,6 +42,7 @@ onFormSubmit(e){
 }
 onChange(e) {
   this.setState({file:e.target.files[0]})
+  console.log("Teste " + e.target.files[0])
 }
 fileUpload(file){
   const url = 'http://example.com/file-upload';
