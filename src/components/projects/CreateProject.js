@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios, { post } from 'axios';
+import { post } from 'axios';
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
