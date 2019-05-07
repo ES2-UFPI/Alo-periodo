@@ -32,19 +32,19 @@ class SignUp extends Component {
           <h5 className="blue-grey-text text-darken-3">Sign Up</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input type="email" id='email' onChange={this.handleChange} />
+            <input type="email" id='email' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="password">Password</label>
-            <input type="password" id='password' onChange={this.handleChange} />
+            <input type="password" id='password' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="firstName">First Name</label>
-            <input type="text" id='firstName' onChange={this.handleChange} />
+            <input type="text" id='firstName' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" id='lastName' onChange={this.handleChange} />
+            <input type="text" id='lastName' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <button className="btn gray lighten-1 z-depth-3">Sign Up</button>
