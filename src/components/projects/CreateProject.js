@@ -9,57 +9,50 @@ class CreateProject extends Component {
     title: '',
     content: ''
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     // console.log(this.state);
     this.props.createProject(this.state)
     
-    // ao criar o Projeto, direciona o Usuário para a página Home
-    this.props.history.push('/');
+    this.props.history.push('/'); // Ao criar o Projeto, direciona o Usuario para a pagina Home
   }
 
-// New
+  // New
+  state = { selectedFile: null, loaded: 0, }
 
-constructor(props) {
-  super(props);
-  this.state ={
-    file:null
+  handleselectedFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    })
   }
-  this.onFormSubmit = this.onFormSubmit.bind(this)
-  this.onChange = this.onChange.bind(this)
-  this.fileUpload = this.fileUpload.bind(this)
-}
-onFormSubmit(e){
-  e.preventDefault() // Stop form submit
-  this.fileUpload(this.state.file).then((response)=>{
-    console.log(response.data);
-  })
-}
-onChange(e) {
-  this.setState({file:e.target.files[0]})
-  console.log("Teste " + e.target.files[0])
-}
-fileUpload(file){
-  const url = 'http://example.com/file-upload';
-  const formData = new FormData();
-  formData.append('file',file)
-  const config = {
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
-  }
-  return  post(url, formData,config)
-}
 
+  handleUpload = () => {
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+    post('http://example.com/file-upload', data, {  // Falta definir o endpoint que eh especificado no servidor
+      onUploadProgress: ProgressEvent => {
+        this.setState({
+          loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+        })
+      },
+    }).then(res => {
+        console.log(res.statusText)
+      })
+  }
 // End New
 
   render() {
     const { auth } = this.props;
+
+    const isSelectedFile = this.state.selectedFile ? this.state.selectedFile.name : ""; // Exibe o nome do arquivo a ser upado, caso exista
 
     if (!auth.uid) return <Redirect to='/signin' />
     // não permite acessar a página de criação de projeto se não estiver Logado
@@ -78,8 +71,12 @@ fileUpload(file){
           </div>
 
           <div className="file-field">
-            <input type="file" onChange={this.onChange} />
-            <button type="submit">Upload</button>
+            <input type="file" onChange={this.handleselectedFile} />
+            <div>
+              <button onClick={this.handleUpload}>Upload</button>
+              <label htmlFor="content"> { isSelectedFile } </label>
+            </div>
+            <div> {Math.round(this.state.loaded,2) } %</div>
           </div>
           
           <div className="input-field">
