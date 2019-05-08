@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios, { post } from 'axios';
+import { post } from 'axios';
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
@@ -42,6 +42,7 @@ onFormSubmit(e){
 }
 onChange(e) {
   this.setState({file:e.target.files[0]})
+  console.log("Teste " + e.target.files[0])
 }
 fileUpload(file){
   const url = 'http://example.com/file-upload';

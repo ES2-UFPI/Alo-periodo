@@ -5,11 +5,12 @@ const initState = {
 const authReducer = (state = initState, action) => {
   switch(action.type){
 
+    // Mensagens de aviso ao usuario
     case 'LOGIN_ERROR':
       console.log('Login Error');
       return {
         ...state,
-        authError: 'Desculpe, isso não funcionou: ' + 'Login Failed'
+        authError: 'Desculpe, isso não funcionou: Login Failed'
       }
 
     case 'LOGIN_SUCCESS':
@@ -33,8 +34,7 @@ const authReducer = (state = initState, action) => {
       console.log('SignUp Error');
       return {
         ...state,
-        authError: 'Desculpe, isso não funcionou: ' + action.err.message
-        // se o email ou senha não forem válidos, mostra a msg de erro
+        authError: 'Desculpe, isso não funcionou: ' + action.err.message  // se o email ou senha não forem válidos, mostra a msg de erro
       }
 
     default:
