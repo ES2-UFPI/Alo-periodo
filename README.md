@@ -11,7 +11,7 @@ O projeto Alo Periodo está sendo desenvolvido para a disciplina Engenharia de S
 
 ## Release History
 
-* v0.1.0 - 27/04/2019
+* v0.2.0 - 28/05/2019
 
 ### New Features
 
@@ -22,6 +22,10 @@ O projeto Alo Periodo está sendo desenvolvido para a disciplina Engenharia de S
 * #27 https://github.com/ES2-UFPI/Alo-periodo/issues/27 Exibir no Projeto o Universitário que o criou;
 
 * #28 https://github.com/ES2-UFPI/Alo-periodo/issues/28 Exibir no Projeto sua Data de criação;
+
+* #19 https://github.com/ES2-UFPI/Alo-periodo/issues/19 Exibir informações do arquivo upado;
+
+* #22 https://github.com/ES2-UFPI/Alo-periodo/issues/22 Sub-menu com Configurações.
 
 
 <!-- Markdown link & img dfn's -->
