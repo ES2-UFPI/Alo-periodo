@@ -1,84 +1,96 @@
 import React, { Component } from 'react'
-import axios, { post } from 'axios';
-
+import { post } from 'axios';
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
+import { Redirect } from 'react-router-dom'
 
 class CreateProject extends Component {
   state = {
     title: '',
     content: ''
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     // console.log(this.state);
     this.props.createProject(this.state)
+    
+    this.props.history.push('/'); // Ao criar o Projeto, direciona o Usuario para a pagina Home
   }
 
-// New
+  // New
+  state = { selectedFile: null, loaded: 0, }
 
-constructor(props) {
-  super(props);
-  this.state ={
-    file:null
+  handleselectedFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    })
   }
-  this.onFormSubmit = this.onFormSubmit.bind(this)
-  this.onChange = this.onChange.bind(this)
-  this.fileUpload = this.fileUpload.bind(this)
-}
-onFormSubmit(e){
-  e.preventDefault() // Stop form submit
-  this.fileUpload(this.state.file).then((response)=>{
-    console.log(response.data);
-  })
-}
-onChange(e) {
-  this.setState({file:e.target.files[0]})
-}
-fileUpload(file){
-  const url = 'http://example.com/file-upload';
-  const formData = new FormData();
-  formData.append('file',file)
-  const config = {
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
-  }
-  return  post(url, formData,config)
-}
 
+  handleUpload = () => {
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+    post('http://example.com/file-upload', data, {  // Falta definir o endpoint que eh especificado no servidor
+      onUploadProgress: ProgressEvent => {
+        this.setState({
+          loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+        })
+      },
+    }).then(res => {
+        console.log(res.statusText)
+      })
+  }
 // End New
 
   render() {
+    const { auth } = this.props;
+
+    const isSelectedFile = this.state.selectedFile ? this.state.selectedFile.name : ""; // Exibe o nome do arquivo a ser upado, caso exista
+
+    if (!auth.uid) return <Redirect to='/signin' />
+    // não permite acessar a página de criação de projeto se não estiver Logado
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Create a New Project</h5>
-          <div className="input-field">
-            <input type="text" id='title' onChange={this.handleChange} />
+          <h5 className="blue-grey-text text-darken-3">Create a New Project</h5>
+          <div className="input-field" >
+            <input type="text" id='title' onChange={this.handleChange} required/>
             <label htmlFor="title">Project Title</label>
           </div>
-          <div className="input-field">
-            <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
+          <div className="input-field" >
+            <textarea id="content" className="materialize-textarea" onChange={this.handleChange} required></textarea>
             <label htmlFor="content">Project Content</label>
           </div>
 
           <div className="file-field">
-            <input type="file" onChange={this.onChange} />
-            <button type="submit">Upload</button>
+            <input type="file" onChange={this.handleselectedFile} />
+            <div>
+              <button onClick={this.handleUpload}>Upload</button>
+              <label htmlFor="content"> { isSelectedFile } </label>
+            </div>
+            <div> {Math.round(this.state.loaded,2) } %</div>
           </div>
           
           <div className="input-field">
-            <button className="btn gray lighten-1">Create</button>
+            <button className="btn gray darken-3">Create</button>
           </div>
         </form>
       </div>
     )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
   }
 }
 
@@ -88,4 +100,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateProject)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject)

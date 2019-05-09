@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { signUp } from '../../store/actions/authActions'
 
 class SignUp extends Component {
   state = {
@@ -7,6 +10,7 @@ class SignUp extends Component {
     firstName: '',
     lastName: '',
   }
+  
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
@@ -14,31 +18,41 @@ class SignUp extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.signUp(this.state) // envio dos dados do Universitário (state)
   }
+
   render() {
+    const { auth, authError } = this.props;
+    if (auth.uid) return <Redirect to='/' />
+    // se logado => não permite acessar a página de /signup => manda pra home /
+
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Sign Up</h5>
+          <h5 className="blue-grey-text text-darken-3">Sign Up</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input type="email" id='email' onChange={this.handleChange} />
+            <input type="email" id='email' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="password">Password</label>
-            <input type="password" id='password' onChange={this.handleChange} />
+            <input type="password" id='password' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="firstName">First Name</label>
-            <input type="text" id='firstName' onChange={this.handleChange} />
+            <input type="text" id='firstName' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" id='lastName' onChange={this.handleChange} />
+            <input type="text" id='lastName' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
-            <button className="btn gray lighten-1 z-depth-0">Sign Up</button>
+            <button className="btn gray lighten-1 z-depth-3">Sign Up</button>
+            
+            <div className="center green-text">
+              { authError ? <p>{authError}</p> : null }
+            </div>
+
           </div>
         </form>
       </div>
@@ -46,4 +60,17 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => { // disparar a criação do novo Universitário
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser)) // função signUp da authActions.js
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

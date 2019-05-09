@@ -9,7 +9,7 @@ class Dashboard extends Component {
   render() {
     
     // console.log(this.props);
-    const { projects } = this.props;
+    const { projects } = this.props; 
     
     return (
       <div className="dashboard container">
@@ -36,6 +36,6 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([
-    { collection: 'projects' }
+    { collection: 'projects', orderBy: ['createdAt', 'desc'] } // ordena pelo postado mais recente
   ])
 )(Dashboard)
