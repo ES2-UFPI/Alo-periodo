@@ -16,4 +16,6 @@ firebase.initializeApp(config);
 
 firebase.firestore().settings({ timestampsInSnapshots: true });
 
+// var storage = firebase.app().storage("gs://alo-periodo-dff25.appspot.com");
+
 export default firebase;

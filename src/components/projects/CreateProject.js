@@ -24,6 +24,7 @@ class CreateProject extends Component {
     this.props.history.push('/'); // Ao criar o Projeto, direciona o Usuario para a pagina Home
   }
 
+  // ****************************************************************
   // New
   state = { selectedFile: null, loaded: 0, }
 
@@ -37,7 +38,7 @@ class CreateProject extends Component {
   handleUpload = () => {
     const data = new FormData()
     data.append('file', this.state.selectedFile, this.state.selectedFile.name)
-    post('http://example.com/file-upload', data, {  // Falta definir o endpoint que eh especificado no servidor
+    post('gs://alo-periodo-dff25.appspot.com/files', data, {  // Falta definir o endpoint que eh especificado no servidor
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -48,6 +49,7 @@ class CreateProject extends Component {
       })
   }
 // End New
+// *********************************************************************
 
   render() {
     const { auth } = this.props;
