@@ -3,17 +3,28 @@ import { post } from 'axios';
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
-
+import { storage } from '../../config/fbConfig'
+ 
 class CreateProject extends Component {
   state = {
     title: '',
-    content: ''
+    content: '',
+    file: null,
+    url: '',
+    progress: 0
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
+  }
+
+  handleUpChange = (e) => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({image}));
+    }
   }
 
   handleSubmit = (e) => {
@@ -36,25 +47,33 @@ class CreateProject extends Component {
   }
 
   handleUpload = () => {
-    const data = new FormData()
-    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
-    post('gs://alo-periodo-dff25.appspot.com/files', data, {  // Falta definir o endpoint que eh especificado no servidor
-      onUploadProgress: ProgressEvent => {
-        this.setState({
-          loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-        })
-      },
-    }).then(res => {
-        console.log(res.statusText)
+    const {image} = this.state;
+    const uploadTask = storage.ref(`files/${image.name}`).put(image);
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      // progrss function ....
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      this.setState({progress});
+    }, 
+    (error) => {
+         // error function ....
+      console.log(error);
+    }, 
+  () => {
+      // complete function ....
+      storage.ref('files').child(image.name).getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({url});
       })
-  }
+  });
+}
 // End New
 // *********************************************************************
 
   render() {
     const { auth } = this.props;
 
-    const isSelectedFile = this.state.selectedFile ? this.state.selectedFile.name : ""; // Exibe o nome do arquivo a ser upado, caso exista
+    // const isSelectedFile = this.state.selectedFile ? this.state.selectedFile.name : ""; // Exibe o nome do arquivo a ser upado, caso exista
 
     if (!auth.uid) return <Redirect to='/signin' />
     // não permite acessar a página de criação de projeto se não estiver Logado
@@ -72,13 +91,13 @@ class CreateProject extends Component {
             <label htmlFor="content">Project Content</label>
           </div>
 
-          <div className="file-field">
-            <input type="file" onChange={this.handleselectedFile} />
-            <div>
-              <button onClick={this.handleUpload}>Upload</button>
-              <label htmlFor="content"> { isSelectedFile } </label>
-            </div>
-            <div> {Math.round(this.state.loaded,2) } %</div>
+          <div>
+            <progress value={this.state.progress} max="100"/>
+            <br/>
+            <input type="file" onChange={this.handleUpChange}/>
+            <button onClick={this.handleUpload}>Upload</button>
+            <br/>
+            <img src={ this.state.url } alt="..."/>
           </div>
           
           <div className="input-field">

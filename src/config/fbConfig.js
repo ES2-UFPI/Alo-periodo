@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
   // Initialize Firebase
 var config = {
@@ -16,6 +17,9 @@ firebase.initializeApp(config);
 
 firebase.firestore().settings({ timestampsInSnapshots: true });
 
+var storage = firebase.storage();
 // var storage = firebase.app().storage("gs://alo-periodo-dff25.appspot.com");
 
-export default firebase;
+export {
+  storage, firebase as default
+}
