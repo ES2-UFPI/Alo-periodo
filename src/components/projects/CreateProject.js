@@ -10,8 +10,8 @@ class CreateProject extends Component {
     title: '',
     content: '',
     file: null,
-    url: '',
-    progress: 0
+    //url: '',
+    //progress: 0
   }
 
   handleChange = (e) => {
@@ -94,7 +94,7 @@ class CreateProject extends Component {
           <div>
             <progress value={this.state.progress} max="100"/>
             <br/>
-            <input type="file" onChange={this.handleUpChange}/>
+            <input type="file" id='file' onChange={this.handleUpChange}/>
             <button onClick={this.handleUpload}>Upload</button>
             <br/>
             <img src={ this.state.url } alt="..."/>

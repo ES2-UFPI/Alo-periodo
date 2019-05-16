@@ -1,5 +1,6 @@
 // Action para salvar no Firestore o projeto que foi criado
 // Nele também deve salvar o Universitário que o criou
+import { storage } from '../../config/fbConfig'
 
 export const createProject = (project) => {
     return (dispatch, getState, { getFirebase, getFirestore}) => {
@@ -7,6 +8,7 @@ export const createProject = (project) => {
       const firestore = getFirestore();
       const profile = getState().firebase.profile;
       const authorId = getState().firebase.auth.uid;
+      //const storage = firebase.storage();
       
       firestore.collection('projects').add({
 
@@ -14,7 +16,8 @@ export const createProject = (project) => {
         authorFirstName: profile.firstName,
         authorLastName: profile.lastName,
         authorId: authorId,
-        createdAt: new Date(),
+        createdAt: new Date()
+        // definir aqui o que vai ser salvo la no projects do Firebase
 
       }).then(() => {
         
