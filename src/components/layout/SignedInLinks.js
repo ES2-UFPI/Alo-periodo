@@ -47,7 +47,7 @@ class SignedInLinks extends React.Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
               >
-                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                <MenuItem onClick={ this.handleClose }>Profile</MenuItem>
                 <MenuItem onClick={ props.redefinePassword }>Change Password</MenuItem>
                 <MenuItem onClick={ props.signOut }>Logout</MenuItem>
               </Menu>

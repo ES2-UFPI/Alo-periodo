@@ -62,6 +62,7 @@ export const redefinePassword = () => {
     
     firebase.auth().sendPasswordResetEmail(email).then(() => {  // Envia email de redefinicao de senha ao usuario
       dispatch({ type: 'EMAIL_SENT' })
+        alert("Verifique seu email!");
     }).catch((err) => {
       dispatch({ type: 'EMAIL_ERROR', err });
     });
