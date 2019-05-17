@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+
+branches:
+  only:
+    - master
+    - dev
+script:
+  - npm test
+  - npm run build
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  GITHUB-TOKEN: $github-token  # Set in travis-ci.org dashboard, marked secure
+  local_dir: build
+  keep-history: true
+  on:
+    branch: master
