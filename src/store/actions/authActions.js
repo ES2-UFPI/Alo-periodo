@@ -1,31 +1,30 @@
 export const signIn = (credentials) => {
 
-    return (dispatch, getState, {getFirebase}) => {
-      const firebase = getFirebase();
+  return (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
       
-      firebase.auth().signInWithEmailAndPassword(
+    firebase.auth().signInWithEmailAndPassword(
         
-        credentials.email,
-        credentials.password
+      credentials.email,
+      credentials.password
 
-      ).then(() => {
-        dispatch({ type: 'LOGIN_SUCCESS' });
-      }).catch((err) => {
-        dispatch({ type: 'LOGIN_ERROR', err });
-      });
-  
-    }
+    ).then(() => {
+      dispatch({ type: 'LOGIN_SUCCESS' });
+    }).catch((err) => {
+      dispatch({ type: 'LOGIN_ERROR', err });
+    });
   }
+}
 
 export const signOut = () => {
-    return (dispatch, getState, {getFirebase}) => {
-      const firebase = getFirebase();
+  return (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
   
-      firebase.auth().signOut().then(() => {
-        dispatch({ type: 'SIGNOUT_SUCCESS' })
-      });
-    }
+    firebase.auth().signOut().then(() => {
+      dispatch({ type: 'SIGNOUT_SUCCESS' })
+    });
   }
+}
 
 export const signUp = (newUser) => { // criação de um novo Universitário
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -51,5 +50,21 @@ export const signUp = (newUser) => { // criação de um novo Universitário
     }).catch(err => { // tratamento do erro de signup
       dispatch({ type: 'SIGNUP_ERROR', err })
     })
+  }
+}
+
+export const redefinePassword = () => {
+  return (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
+
+    const email = getState().firebase.auth.email; // Pega o email referente ao usuario para q ele possa redefinir sua senha
+//    console.log("Teste " + emailTest);
+    
+    firebase.auth().sendPasswordResetEmail(email).then(() => {  // Envia email de redefinicao de senha ao usuario
+      dispatch({ type: 'EMAIL_SENT' })
+        alert("Verifique seu email!");
+    }).catch((err) => {
+      dispatch({ type: 'EMAIL_ERROR', err });
+    });
   }
 }
