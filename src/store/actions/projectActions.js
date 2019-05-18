@@ -8,7 +8,7 @@ export const createProject = (project) => {
       const firestore = getFirestore();
       const profile = getState().firebase.profile;
       const authorId = getState().firebase.auth.uid;
-      //const storage = firebase.storage();
+      const storageRef = storage.ref();
       
       firestore.collection('projects').add({
 
@@ -16,7 +16,10 @@ export const createProject = (project) => {
         authorFirstName: profile.firstName,
         authorLastName: profile.lastName,
         authorId: authorId,
-        createdAt: new Date()
+        createdAt: new Date(),
+        file: 'arquivo',
+        loaded: 0,
+        selectedFile: ''
         // definir aqui o que vai ser salvo la no projects do Firebase
 
       }).then(() => {

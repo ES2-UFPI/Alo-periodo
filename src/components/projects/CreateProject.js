@@ -90,7 +90,7 @@ class CreateProject extends Component {
             <textarea id="content" className="materialize-textarea" onChange={this.handleChange} required></textarea>
             <label htmlFor="content">Project Content</label>
           </div>
-
+          
           <div>
             <progress value={this.state.progress} max="100"/>
             <br/>
@@ -99,7 +99,7 @@ class CreateProject extends Component {
             <br/>
             <img src={ this.state.url } alt="..."/>
           </div>
-          
+
           <div className="input-field">
             <button className="btn gray darken-3">Create</button>
           </div>
