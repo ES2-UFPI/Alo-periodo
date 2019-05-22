@@ -68,3 +68,30 @@ export const redefinePassword = () => {
     });
   }
 }
+
+export const showProfile = () => {
+
+  render() {
+    return (dispatch,
+      getState,
+      {getFirebase}
+      ) => {
+      const firebase = getFirebase();
+
+      const nomeFull = getState().firebase.profile.firstName + " " + getState().firebase.profile.lastName;
+      const email = getState().firebase.auth.email;
+
+      <div className="container">
+        <form className="white">
+          <h5 className="blue-grey-text text-darken-3">Profile</h5>
+          <div className="input-field">
+            <label htmlFor="nome"> {nomeFull} </label>
+          </div>
+          <div className="input-field">
+            <label htmlFor="email"> {email} </label>
+          </div>
+        </form>
+      </div>
+    };
+  }
+}
