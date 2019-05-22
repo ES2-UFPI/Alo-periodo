@@ -3,7 +3,9 @@ import { post } from 'axios';
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
-import { storage } from '../../config/fbConfig'
+// import { storage } from '../../config/fbConfig'
+// import { func } from 'prop-types';
+import firebase from 'firebase'
  
 class CreateProject extends Component {
   state = {
@@ -20,13 +22,6 @@ class CreateProject extends Component {
     })
   }
 
-  handleUpChange = (e) => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({image}));
-    }
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     // console.log(this.state);
@@ -35,40 +30,40 @@ class CreateProject extends Component {
     this.props.history.push('/'); // Ao criar o Projeto, direciona o Usuario para a pagina Home
   }
 
-  // ****************************************************************
-  // New
-  state = { selectedFile: null, loaded: 0, }
+// -----------------------------------------------------------------------
+  handleUpFile = () => {
+    // Get elements
+    var uploader = document.getElementById('uploader');
+    var fileButton = document.getElementById('fileButton');
 
-  handleselectedFile = event => {
-    this.setState({
-      selectedFile: event.target.files[0],
-      loaded: 0,
-    })
+    // Lista os aquivos para selecionar
+    fileButton.addEventListener('change', function(e) {
+
+      // Get file
+      var file = e.target.files[0];
+
+      // Referencia ao Storage
+      var storageRef = firebase.storage().ref('files/' + file.name);
+
+      // Upload file
+      var task = storageRef.put(file);
+
+      // Atualizar o progresso da barra de upload file
+      task.on('state_changed',
+        function progress(snapshot) {
+          var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+          uploader.value = percentage;
+        },
+        function error(err) {
+          console.log(err);
+        },
+        function complete() {
+          console.log("Upload concluido!");
+        }
+      );
+    });
   }
-
-  handleUpload = () => {
-    const {image} = this.state;
-    const uploadTask = storage.ref(`files/${image.name}`).put(image);
-    uploadTask.on('state_changed', 
-    (snapshot) => {
-      // progrss function ....
-      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      this.setState({progress});
-    }, 
-    (error) => {
-         // error function ....
-      console.log(error);
-    }, 
-  () => {
-      // complete function ....
-      storage.ref('files').child(image.name).getDownloadURL().then(url => {
-          console.log(url);
-          this.setState({url});
-      })
-  });
-}
-// End New
-// *********************************************************************
+// -----------------------------------------------------------------------
 
   render() {
     const { auth } = this.props;
@@ -92,12 +87,11 @@ class CreateProject extends Component {
           </div>
           
           <div>
-            <progress value={this.state.progress} max="100"/>
+            <progress value="0" max="100" id="uploader">0%</progress>
             <br/>
-            <input type="file" id='file' onChange={this.handleUpChange}/>
-            <button onClick={this.handleUpload}>Upload</button>
+            <input type="file" id="fileButton" onChange={this.handleUpFile}/>
+            <button onClick={this.handleUpFile}>Upload</button>
             <br/>
-            <img src={ this.state.url } alt="..."/>
           </div>
 
           <div className="input-field">
