@@ -6,7 +6,6 @@ branches:
   only:
     - master
     - dev
-    - Hilderlan
 script:
   - npm run build
 
