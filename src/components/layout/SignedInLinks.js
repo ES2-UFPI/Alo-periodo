@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signOut } from '../../store/actions/authActions'
 import { redefinePassword } from '../../store/actions/authActions'
-import { showProfile } from '../../store/actions/authActions'
+//import { showProfile } from '../../store/actions/authActions'
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -48,7 +48,7 @@ class SignedInLinks extends React.Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
               >
-                <MenuItem onClick={ props.showProfile }>Profile</MenuItem>
+                <MenuItem onClick={ props.handleClose }>Profile</MenuItem>
                 <MenuItem onClick={ props.redefinePassword }>Change Password</MenuItem>
                 <MenuItem onClick={ props.signOut }>Logout</MenuItem>
               </Menu>
@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
       signOut: () => dispatch(signOut()),
       redefinePassword: () => dispatch(redefinePassword()),
-      showProfile: () => dispatch(showProfile())
+//      showProfile: () => dispatch(showProfile())
     }
 }
 
