@@ -11,6 +11,8 @@ class Dashboard extends Component {
     // console.log(this.props);
     const { projects } = this.props; 
     
+    // as notificações serão carregadas da Cloud Function Firebase
+    // ela irá exibir as response HTTP do servidor
     return (
       <div className="dashboard container">
         <div className="row">
