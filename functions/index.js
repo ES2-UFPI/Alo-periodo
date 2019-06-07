@@ -19,6 +19,8 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 // comando : " firebase deploy --only functions "
 // -----------------------------------------------------------
 
+// criando um novo database para armazenar as Notifications...
+
 const createNotification = ((notification) => {
     return admin.firestore().collection('notifications')
       .add(notification)
@@ -29,6 +31,7 @@ exports.projectCreated = functions.firestore
   .document('projects/{projectId}')
   .onCreate(doc => {
 
+    // armazena dados de conteúdo da Notification e de quem a fez
     const project = doc.data();
     const notification = {
       content: 'Added a new document.',
@@ -38,3 +41,6 @@ exports.projectCreated = functions.firestore
 
     return createNotification(notification);
 });
+
+// quando um projeto for criado --> em Functions do Firebase ,nos Logs:
+// ficarão registradas as requisições Https que serão feitas  
