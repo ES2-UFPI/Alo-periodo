@@ -1,4 +1,6 @@
 const functions = require('firebase-functions'); // todas as funçoes do firebase sao controladas por essa const
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -14,3 +16,4 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 // comando : " firebase deploy --only functions "
+
