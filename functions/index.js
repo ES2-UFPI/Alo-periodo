@@ -16,7 +16,10 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 // -----------------------------------------------------------
-// comando : " firebase deploy --only functions "
+// Comandos :
+// " npm install -g firebase-tools " e " npm install firebase-functions " --> pkts
+// " firebase login " --> logar no firebase
+// " firebase deploy --only functions " --> rodar as functions implementadas
 // -----------------------------------------------------------
 
 // criando um novo database para armazenar as Notifications...
@@ -26,6 +29,9 @@ const createNotification = ((notification) => {
       .add(notification)
       .then(doc => console.log('notification added', doc));
 });
+
+// quando um projeto for criado --> em Functions do Firebase ,nos Logs:
+// ficarão registradas as requisições Https que serão feitas
 
 exports.projectCreated = functions.firestore
   .document('projects/{projectId}')
@@ -42,5 +48,23 @@ exports.projectCreated = functions.firestore
     return createNotification(notification);
 });
 
-// quando um projeto for criado --> em Functions do Firebase ,nos Logs:
-// ficarão registradas as requisições Https que serão feitas  
+// quando o novo User for criado (SignUp) o mesmo procedimento é realizado...
+// fica salvo no database das Notifications
+
+exports.userJoined = functions.auth.user()
+  .onCreate(user => {
+    
+    return admin.firestore().collection('users')
+      .doc(user.uid).get().then(doc => {
+
+        const newUser = doc.data();
+        const notification = {
+          content: 'New user SignUp.',
+          user: `${newUser.firstName} ${newUser.lastName}`,
+          time: admin.firestore.FieldValue.serverTimestamp()
+        };
+
+        return createNotification(notification);
+
+      });
+});
