@@ -40,6 +40,6 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     { collection: 'projects', orderBy: ['createdAt', 'desc'] }, // ordena pelo postado mais recente
-    { collection: 'notifications', limit: 3 }
+    { collection: 'notifications', limit: 3, orderBy: ['time', 'desc'] }
   ])
 )(Dashboard)
