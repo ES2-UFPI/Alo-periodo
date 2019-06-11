@@ -29,6 +29,7 @@ class SignedInLinks extends React.Component {
     return(
       <div>
         <ul className="right">
+          <li><NavLink to='/monitoria'>Monitoring</NavLink></li>
           <li><NavLink to='/create'>New File</NavLink></li>
           <li>
             <div className="btn btn-floating green darken-3">{ props.profile.initials }</div>
