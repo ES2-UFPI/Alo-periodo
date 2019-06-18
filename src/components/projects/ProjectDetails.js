@@ -10,7 +10,7 @@ const ProjectDetails = (props) => {
   
   if(project) {
     return (
-      <div className="container section project-details">
+      <div title = "Details" className="container section project-details">
       <div className="card z-depth-3">
         <div className="card-content">
           <span className="card-title">{ project.title }</span>
@@ -26,7 +26,7 @@ const ProjectDetails = (props) => {
   } else {
     return (
       <div className="container center white-text">
-        <p>Loading project ...</p>
+        <p>Loading document ...</p>
       </div>
     )
   }
